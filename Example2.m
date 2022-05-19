@@ -75,7 +75,7 @@ end
 figure(1)
 subplot(2,1,1)
 hold on
-c13 = Ar(:,401);
+c13 = Ar(:,401);  % entries associated with the topology change
 c31 = Ar(:,343);
 
 gr=plot(ts:ts:time,Ar','g');
