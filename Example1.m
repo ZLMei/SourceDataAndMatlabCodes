@@ -1,6 +1,11 @@
 clear all;clc;close all
 redblue=[0:0.024:0.96,0.96:0.001:1; 0:0.024:0.96,0.96:-0.024:0;1:-0.001:0.96,0.96:-0.024:0 ]';
 load('Source_data_for_example_1.mat');
+% loaded data:
+% A  : adjacency matrix
+% D  : Degree matrix
+% a1t: Theoretically obtained 'true' A1 matrix
+% x  : trajectories of 10 oscillators   [step * node index];
 
 stp = 1000;
 ts = 0.01;
@@ -74,7 +79,6 @@ figure(3)
 se1=semilogy(er);
 hold on
 se2=semilogy(5+0*(1:1:stp),'k--');
-% axis([-inf inf -5 150])
 ylabel('error(\%) $$\mathcal{I}[k]$$', 'interpreter','latex' )
 legend([se1(1),se1(2),se2],'proposed method','pseudo-inverse-based method','5% error')
 grid on
@@ -108,16 +112,13 @@ for i=1:N
     text(1.2*nx(i),1.2*ny(i),num2str(i));
     for j=1:N
         if A(i,j)
-%             quiver(nx(j),ny(j),nx(i)-nx(j),ny(i)-ny(j),0,'k')           %  black : large index to small index
             plot([nx(i),nx(j)],[ny(i),ny(j)],'b')  ;                    % undirected
         end
     end
 end
 tx=text(-1.2,0,{'$$(d)$$'},'interpreter','latex','Rotation',90);
-% set(tx','Rotation','90')
 axis off
-% ylabel('$$(d)$$','interpreter','latex')
-% ylabel on
+
 
 subplot(2,4,8)
 imagesc(L)
@@ -126,34 +127,16 @@ ylabel('$$(e)$$','interpreter','latex')
 
 
 
-% figure(3)
-% hold on
-% scatter(reshape(At,[],1),reshape(ar,[],1),'rx')
-% plot(min(min(At))-0.5:max(max(At))+0.5,min(min(At))-0.5:max(max(At))+0.5,'k')
-
 
 function y=plift(x)
 x = x';
 [N,m] = size(x);
-
-% y = [ones(1,m);x;cos(x);sin(x);x.^2;x.^3;exp(x)];
 y = [ones(1,m);x/2/pi;cos(x);sin(x)];
 
-% X=zeros(N^2,m);
-% for i =1:m
-%     X(:,i) = reshape(cos(x(:,i))*sin(x(:,i))',[],1);
-% end
-% y = [ones(1,m);x;X];
-% y = [ones(1,m);x];
 end
 
 
 
-function A = graph(N,s)
-A = rand(N,N);
-A = (A+A')/2 > s;
-A = A.*(ones(N,N)-eye(N));
-end
 
 function y = sth(x,s)
 y=(abs(x)>s).*(x-sign(x)*s);
@@ -161,18 +144,6 @@ end
 
 
 
-function y = f(x,A,w)
-N = length(x);
-
-u=zeros(1,N);
-for i =1:N
-    for j=1:N
-        u(1,i) = u(1,i) + A(i,j)*sin(x(j)-x(i));
-        %         u(1,i) = u(1,i) + A(i,j)*(x(j)-x(i));
-    end
-end
-y = w + u;
-end
 
 function y = update_data(X,x)  
 X(2:end,:,:)=X(1:end-1,:,:);
@@ -180,16 +151,6 @@ X(1,:,:)=x;
 y = X;
 end
 
-function y = rk(x,A,w,ts)
-k1 = f(x,A,w);
-k2 = f(x+0.5*ts*k1,A,w);
-k3 = f(x+0.5*ts*k2,A,w);
-k4 = f(x+ts*k3,A,w);
-
-y = x + 1/6*ts*(k1+2*k2+2*k3+k4);
-
-
-end
 
 function y = getA2(A)
 A(:,12:21) = diag(sum(A(:,12:21),1));
