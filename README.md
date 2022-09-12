@@ -8,7 +8,7 @@ which is submitted to the International Journal of Science Science.
 
 File                              Corresponding Example in the paper
 
-Example1_1.m                      Sec.4.1: the observable span contains the coupling function \\
+Example1_1.m                      Sec.4.1: the observable span contains the coupling function \t
   -Source_data_for_example_1-1\\
 Example1_2.m                      Sec.4.1: Network of scalar nodes using square waves as obseravbles\\
 Example1_3.m                      Sec.4.1: Relationship between identification accuracy and the data amount $m$ \\
