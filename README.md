@@ -9,7 +9,7 @@ which is submitted to the International Journal of Science Science.
 File                              &emsp;&emsp;&emsp;Corresponding Example in the paper
 
 Example1_1.m                      &emsp;Sec.4.1: the observable span contains the coupling function <br />
-  -Source_data_for_example_1-1<br />
+  -Source_data_for_example_1-1.mat<br />
 Example1_2.m                      &emsp;Sec.4.1: Network of scalar nodes using square waves as obseravbles<br />
 Example1_3.m                      &emsp;Sec.4.1: Relationship between identification accuracy and the data amount $m$ <br />
 Example1_4.m                      &emsp;Sec.4.1: Relationship between identification accuracy and the number of observables $q$ <br />
